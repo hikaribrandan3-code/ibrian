@@ -27,8 +27,8 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-white);
-            color: var(--text-primary);
+            background: #ffffff;
+            color: #1a1a1a;
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -634,41 +634,6 @@
             }
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-white: #0a0a0a;
-                --bg-gray: #111111;
-                --text-primary: #ffffff;
-                --text-secondary: #a0a0a0;
-                --text-muted: #666666;
-                --border-light: rgba(255, 255, 255, 0.08);
-            }
-
-            nav {
-                background: rgba(10, 10, 10, 0.85);
-                border-bottom: 1px solid var(--border-light);
-            }
-
-            .badge {
-                background: #1a1a1a;
-                color: #a0a0a0;
-            }
-
-            .feature-card, .testimonial-card {
-                background: #111111;
-                border: 1px solid rgba(255,255,255,0.06);
-                box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            }
-
-            .faq-item {
-                border-bottom: 1px solid rgba(255,255,255,0.06);
-            }
-
-            footer {
-                border-top: 1px solid var(--border-light);
-            }
-        }
     </style>
 <base target="_blank">
 </head>
