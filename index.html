@@ -18,7 +18,7 @@
             --accent-purple-dark: #764ba2;
             --accent-green: #10b981;
             --bg-white: #ffffff;
-            --bg-gray: #fafafa;
+            --bg-gray: #ffffff;
             --text-primary: #1a1a1a;
             --text-secondary: #666666;
             --text-muted: #999999;
@@ -252,16 +252,17 @@
         }
 
         .feature-card {
-            background: var(--bg-gray);
+            background: #ffffff;
             border-radius: 20px;
             padding: 40px;
             transition: all 0.3s;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
 
         .feature-icon {
@@ -352,10 +353,11 @@
         }
 
         .testimonial-card {
-            background: var(--bg-gray);
+            background: #ffffff;
             border-radius: 16px;
             padding: 32px;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .stars {
@@ -650,12 +652,13 @@
 
             .badge {
                 background: #1a1a1a;
-                color: var(--text-secondary);
+                color: #a0a0a0;
             }
 
             .feature-card, .testimonial-card {
                 background: #111111;
                 border: 1px solid rgba(255,255,255,0.06);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.3);
             }
 
             .faq-item {
