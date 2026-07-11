@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iBrain — Private AI for Your Mac</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent-purple: #667eea;
+            --accent-purple-dark: #764ba2;
+            --accent-green: #10b981;
+            --bg-white: #ffffff;
+            --bg-gray: #fafafa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border-light: rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 24px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-dark) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-dark));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 24px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-dark));
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-cta .price {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding: 40px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .features h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 60px;
+            line-height: 1.2;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-gray);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s;
+            border: 1px solid var(--border-light);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .how-it-works h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .step {
+            text-align: left;
+        }
+
+        .step-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 12px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonials h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-gray);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border-light);
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .author-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Download Section */
+        .download {
+            padding: 80px 24px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .download h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .download-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        .download-card {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-dark));
+            border-radius: 24px;
+            padding: 48px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .download-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 24px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .download-card h3 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .download-card .description {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .price-free {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .features-list li {
+            list-style: none;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            font-weight: 700;
+        }
+
+        .download-cta {
+            display: block;
+            background: white;
+            color: var(--accent-purple-dark);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .download-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 24px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            padding: 24px 0;
+        }
+
+        .faq-question {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .faq-answer {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 24px 40px;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-card {
+                padding: 32px 24px;
+            }
+
+            .price-free {
+                font-size: 42px;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-white: #0a0a0a;
+                --bg-gray: #111111;
+                --text-primary: #ffffff;
+                --text-secondary: #a0a0a0;
+                --text-muted: #666666;
+                --border-light: rgba(255, 255, 255, 0.08);
+            }
+
+            nav {
+                background: rgba(10, 10, 10, 0.85);
+                border-bottom: 1px solid var(--border-light);
+            }
+
+            .badge {
+                background: #1a1a1a;
+                color: var(--text-secondary);
+            }
+
+            .feature-card, .testimonial-card {
+                background: #111111;
+                border: 1px solid rgba(255,255,255,0.06);
+            }
+
+            .faq-item {
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+            }
+
+            footer {
+                border-top: 1px solid var(--border-light);
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🧠</div>
+                iBrain
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#faq">FAQ</a>
+                <a href="#download" class="nav-cta">Download Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="badge">
+            <span class="badge-dot"></span>
+            100% Private — No Cloud Required
+        </div>
+        <h1>Your private AI assistant.<br><span>Always offline.</span></h1>
+        <p>iBrain runs local AI models on your Mac via Ollama. No API keys, no subscriptions, no data leaving your machine. Chat, summarize, and generate — completely offline.</p>
+        <a href="#download" class="hero-cta">
+            Download iBrain
+            <span class="price">— Free</span>
+        </a>
+    </section>
+
+    <section class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">0ms</div>
+            <div class="stat-label">Latency</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Private</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Available</div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-label">Features</div>
+        <h2>Built for privacy.<br>Designed for you.</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">🔒</div>
+                <h3>Completely Private</h3>
+                <p>Every conversation stays on your Mac. No cloud servers, no data collection, no tracking. Your thoughts are yours alone.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">✈️</div>
+                <h3>Works Offline</h3>
+                <p>Camping, flying, or in a bunker with no WiFi? iBrain works everywhere. All AI processing happens locally on your machine.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">⚡</div>
+                <h3>One-Click Models</h3>
+                <p>No terminal commands. No GitHub repos. Download AI models with one click. Optimized for Apple Silicon — fast and efficient.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">🎨</div>
+                <h3>Customizable AI</h3>
+                <p>Write your own system instructions or pick presets: Concise, Detailed, Creative, Technical. Make the AI work exactly how you want.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-label">How It Works</div>
+        <h2>Three steps to private AI.</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Install iBrain</h3>
+                <p>Download from the website or App Store. Drag to Applications, launch once. iBrain auto-detects if Ollama is installed and guides you through setup.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>Download a Model</h3>
+                <p>Pick from curated models optimized for Mac. Llama 3, Mistral, Phi — all one-click downloads. No terminal, no configuration files.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>Start Chatting</h3>
+                <p>Press Cmd+Opt+B from any app. Ask questions, summarize text, generate code, or brainstorm ideas. Everything stays on your Mac.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-label">Reviews</div>
+        <h2>Loved by privacy-focused users.</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"I work with sensitive client data. iBrain lets me use AI without violating NDAs. Everything stays local. Game changer."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AR</div>
+                    <div class="author-info">
+                        <h4>Ana R.</h4>
+                        <p>Lawyer, Mexico</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Finally an AI tool that doesn't need internet. I use it on flights to summarize meeting notes. Works flawlessly offline."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">CM</div>
+                    <div class="author-info">
+                        <h4>Carlos M.</h4>
+                        <p>Developer, Argentina</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Replaced ChatGPT for 90% of my work. The one-click model download is genius — my mom could set this up."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">LP</div>
+                    <div class="author-info">
+                        <h4>Lucia P.</h4>
+                        <p>Content Creator, Chile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="download" id="download">
+        <div class="section-label">Download</div>
+        <h2>Free forever.</h2>
+        <p class="download-subtitle">No subscriptions. No hidden fees. No data collection.</p>
+        <div class="download-card">
+            <div class="download-badge">100% FREE</div>
+            <h3>iBrain</h3>
+            <p class="description">Private AI chat for your Mac.</p>
+            <div class="price-free">$0</div>
+            <ul class="features-list">
+                <li><span class="check">✓</span> Local AI via Ollama</li>
+                <li><span class="check">✓</span> 100% offline capable</li>
+                <li><span class="check">✓</span> One-click model downloads</li>
+                <li><span class="check">✓</span> Custom AI instructions</li>
+                <li><span class="check">✓</span> Multi-language support</li>
+                <li><span class="check">✓</span> Optional cloud API (Claude/GPT)</li>
+                <li><span class="check">✓</span> Light & dark mode</li>
+            </ul>
+            <a href="#" class="download-cta">Download Free</a>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <div class="faq-question">Is iBrain really free?</div>
+            <div class="faq-answer">Yes. iBrain is completely free to download and use. All local AI features work without payment. The optional cloud API integration (Claude, GPT) requires your own API key, but the local Ollama features are 100% free.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How does offline mode work?</div>
+            <div class="faq-answer">iBrain connects to a local Ollama instance running on your Mac. AI models are downloaded to your machine and processed locally using your CPU/GPU. No internet is required after the initial model download.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Can I use cloud AI instead?</div>
+            <div class="faq-answer">Yes. iBrain supports optional cloud APIs — bring your own Anthropic (Claude) or OpenAI (GPT) key. This is useful for more advanced models, but completely optional. All local features work without it.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Does it work on Intel Macs?</div>
+            <div class="faq-answer">iBrain is optimized for Apple Silicon (M1, M2, M3, M4) and requires macOS 14 (Sonoma) or later. Intel Mac support is not available due to local AI performance requirements.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Is iBrain part of iSuite Office?</div>
+            <div class="faq-answer">Yes. iBrain is included free with the iSuite Office bundle. If you already own iSuite, you get iBrain at no extra cost. It also integrates with iVoz for voice-to-AI workflows.</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">
+            <div class="logo-icon">🧠</div>
+            iBrain
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Support</a>
+            <a href="#">Twitter</a>
+            <a href="#">GitHub</a>
+            <a href="#">iSuite Office</a>
+        </div>
+        <p class="footer-copy">© 2026 iBrain. Part of iSuite Office. Built for Mac.</p>
+    </footer>
+</body>
+</html>
