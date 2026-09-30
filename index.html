@@ -726,10 +726,10 @@
     </style>
 <base target="_blank">
 </head>
-<body>
+<body id="top">
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo">
+            <a href="#top" class="logo">
                 <div class="logo-icon">🧠</div>
                 iBrain
             </a>
@@ -738,7 +738,7 @@
                 <a href="#how-it-works">How It Works</a>
                 <a href="#suite">iSuite</a>
                 <a href="#faq">FAQ</a>
-                <a href="#download" class="nav-cta">Get iBrain — $29.99</a>
+                <a href="#download" class="nav-cta">Project status</a>
             </div>
         </div>
     </nav>
@@ -746,28 +746,28 @@
     <section class="hero">
         <div class="badge">
             <span class="badge-dot"></span>
-            100% Private — No Cloud Required
+            Free macOS product · Source available
         </div>
-        <h1>Your private AI assistant.<br><span>Always offline.</span></h1>
-        <p>iBrain runs local AI models on your Mac via Ollama. No API keys, no subscriptions, no data leaving your machine. Chat, summarize, and generate — completely offline.</p>
+        <h1>Local AI chat for Mac.<br><span>Cloud is optional.</span></h1>
+        <p>iBrain is a native SwiftUI app that chats with local Ollama models. OpenAI and Anthropic are optional bring-your-own-key providers; local mode keeps prompts on your Mac.</p>
         <a href="#download" class="hero-cta">
-            Download iBrain
-            <span class="price">— $29.99</span>
+            View iBrain project
+            <span class="price">on GitHub</span>
         </a>
     </section>
 
     <section class="stats-bar">
         <div class="stat-item">
-            <div class="stat-number">0ms</div>
-            <div class="stat-label">Latency</div>
+            <div class="stat-number">Local</div>
+            <div class="stat-label">Processing</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Private</div>
+            <div class="stat-number">Optional</div>
+            <div class="stat-label">Cloud providers</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">∞</div>
-            <div class="stat-label">Available</div>
+            <div class="stat-number">Offline</div>
+            <div class="stat-label">Model runtime: Ollama</div>
         </div>
     </section>
 
@@ -777,23 +777,23 @@
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">🔒</div>
-                <h3>Completely Private</h3>
-                <p>Every conversation stays on your Mac. No cloud servers, no data collection, no tracking. Your thoughts are yours alone.</p>
+                <h3>Local by default</h3>
+                <p>Local Ollama chat runs on your Mac. If you enable cloud mode, prompts go to the OpenAI or Anthropic provider you choose.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">✈️</div>
-                <h3>Works Offline</h3>
-                <p>Camping, flying, or in a bunker with no WiFi? iBrain works everywhere. All AI processing happens locally on your machine.</p>
+                <h3>Offline local chat</h3>
+                <p>After Ollama and a model are installed, local chats can run without an internet connection.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">⚡</div>
-                <h3>One-Click Models</h3>
-                <p>No terminal commands. No GitHub repos. Download AI models with one click. Optimized for Apple Silicon — fast and efficient.</p>
+                <h3>Guided model setup</h3>
+                <p>The app can download its recommended model through Ollama. If Ollama is missing, setup instructions are shown first.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">🎨</div>
                 <h3>Customizable AI</h3>
-                <p>Write your own system instructions or pick presets: Concise, Detailed, Creative, Technical. Make the AI work exactly how you want.</p>
+                <p>Write custom system instructions or choose a Concise, Detailed, or Creative preset.</p>
             </div>
         </div>
     </section>
@@ -805,80 +805,40 @@
             <div class="step">
                 <div class="step-number">01</div>
                 <h3>Install iBrain</h3>
-                <p>Download from the website or App Store. Drag to Applications, launch once. iBrain auto-detects if Ollama is installed and guides you through setup.</p>
+                <p>The source is public on GitHub. A compiled app download is not published yet.</p>
             </div>
             <div class="step">
                 <div class="step-number">02</div>
                 <h3>Download a Model</h3>
-                <p>Pick from curated models optimized for Mac. Llama 3, Mistral, Phi — all one-click downloads. No terminal, no configuration files.</p>
+                <p>Install or start Ollama, then iBrain offers to download its recommended model. Other installed Ollama models can be selected in the app.</p>
             </div>
             <div class="step">
                 <div class="step-number">03</div>
                 <h3>Start Chatting</h3>
-                <p>Press Cmd+Opt+B from any app. Ask questions, summarize text, generate code, or brainstorm ideas. Everything stays on your Mac.</p>
+                <p>Open iBrain, choose an installed model, and chat. Prompts stay on your Mac in local mode; cloud mode sends them to the provider you select.</p>
             </div>
         </div>
     </section>
 
-    <section class="testimonials">
-        <div class="section-label">Reviews</div>
-        <h2>Loved by privacy-focused users.</h2>
-        <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"I work with sensitive client data. iBrain lets me use AI without violating NDAs. Everything stays local. Game changer."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">AR</div>
-                    <div class="author-info">
-                        <h4>Ana R.</h4>
-                        <p>Lawyer, Mexico</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Finally an AI tool that doesn't need internet. I use it on flights to summarize meeting notes. Works flawlessly offline."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">CM</div>
-                    <div class="author-info">
-                        <h4>Carlos M.</h4>
-                        <p>Developer, Argentina</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Replaced ChatGPT for 90% of my work. The one-click model download is genius — my mom could set this up."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">LP</div>
-                    <div class="author-info">
-                        <h4>Lucia P.</h4>
-                        <p>Content Creator, Chile</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="download" id="download">
+<section class="download" id="download">
         <div class="section-label">Download</div>
-        <h2>One price. Forever.</h2>
-        <p class="download-subtitle">No subscriptions. No hidden fees. One-time purchase, forever yours.</p>
+        <h2>Project status</h2>
+        <p class="download-subtitle">The app source is public and free. A compiled download is not published yet.</p>
         <div class="download-card">
-            <div class="download-badge">ONE-TIME PURCHASE</div>
+            <div class="download-badge">FREE · OPEN SOURCE</div>
             <h3>iBrain</h3>
             <p class="description">Private AI chat for your Mac.</p>
-            <div class="price-free">$29.99</div>
+            <div class="price-free">Free</div>
             <ul class="features-list">
                 <li><span class="check">✓</span> Local AI via Ollama</li>
-                <li><span class="check">✓</span> 100% offline capable</li>
-                <li><span class="check">✓</span> One-click model downloads</li>
+                <li><span class="check">✓</span> Local chat after Ollama/model setup</li>
+                <li><span class="check">✓</span> Guided recommended-model download</li>
                 <li><span class="check">✓</span> Custom AI instructions</li>
                 <li><span class="check">✓</span> Multi-language support</li>
                 <li><span class="check">✓</span> Optional cloud API (Claude/GPT)</li>
                 <li><span class="check">✓</span> Light & dark mode</li>
             </ul>
-            <a href="#" class="download-cta">Get iBrain — $29.99</a>
+            <a href="https://github.com/hikaribrandan3-code/ibrian" class="download-cta">View iBrain project on GitHub</a>
         </div>
     </section>
 
@@ -890,9 +850,9 @@
             <div class="suite-card">
                 <div class="suite-card-icon">◈</div>
                 <h3>iStats</h3>
-                <p class="suite-card-description">Real-time CPU, memory, network, and disk monitoring — right in your menu bar. Lightweight, offline, and always visible.</p>
-                <div class="suite-card-price">$4.99 <span>one-time</span></div>
-                <a href="https://github.com/hikaribrandan3-code/istats.git" class="suite-card-cta">Get iStats — $4.99</a>
+                <p class="suite-card-description">A native macOS dashboard for CPU, memory, network, disk, and top processes, with a menu-bar shortcut.</p>
+                <div class="suite-card-price">Free</div>
+                <a href="https://github.com/hikaribrandan3-code/istats" class="suite-card-cta">View iStats project</a>
             </div>
         </div>
     </section>
@@ -901,7 +861,7 @@
         <h2>Frequently Asked Questions</h2>
         <div class="faq-item">
             <div class="faq-question">How much does iBrain cost?</div>
-            <div class="faq-answer">iBrain is $29.99 — a one-time purchase with no subscriptions, no hidden fees, and no recurring charges. Buy once, use forever. All features are included. Alternatively, iBrain is included free when you purchase the iSuite bundle.</div>
+            <div class="faq-answer">iBrain is free. The source is public; a compiled download is not published yet.</div>
         </div>
         <div class="faq-item">
             <div class="faq-question">How does offline mode work?</div>
@@ -927,11 +887,8 @@
             iBrain
         </div>
         <div class="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">Support</a>
-            <a href="#">Twitter</a>
-            <a href="#">GitHub</a>
-            <a href="#">iSuite Office</a>
+            <a href="https://github.com/hikaribrandan3-code/ibrian">GitHub project</a>
+            <a href="https://isuitemacos-cyan.vercel.app/">iSuite Office</a>
         </div>
         <p class="footer-copy">© 2026 iBrain. Part of iSuite Office. Built for Mac.</p>
     </footer>
