@@ -13,6 +13,7 @@ final class ChatStore: ObservableObject {
     @Published var isStreaming = false
     @Published var searchText = ""
     @Published var cloudKeyValid: Bool?
+    @Published var cloudSettingsRevision = 0
     @Published var downloadProgress: Double?
     @Published var downloadFailed = false
 
@@ -59,12 +60,7 @@ final class ChatStore: ObservableObject {
         booted = true
         load()
         Task {
-            await refreshServer(autoStart: true)
-            // Auto-download model on first launch if none exist
-            if !useCloudAPI && models.isEmpty {
-                _ = await OllamaClient.downloadModel("llama3.2")
-                await refreshModels()
-            }
+            await refreshServer(autoStart: !useCloudAPI)
         }
     }
 
@@ -174,7 +170,14 @@ final class ChatStore: ObservableObject {
 
     var useCloudAPI: Bool {
         UserDefaults.standard.bool(forKey: Prefs.useCloudAPI)
-            && (Keychain.load(provider: selectedProvider)?.isEmpty == false)
+    }
+
+    var hasCloudKey: Bool {
+        Keychain.load(provider: selectedProvider)?.isEmpty == false
+    }
+
+    func cloudSettingsDidChange() {
+        cloudSettingsRevision += 1
     }
 
     func validateCloudKey() async {
@@ -221,6 +224,9 @@ final class ChatStore: ObservableObject {
     func send(_ text: String, language: Language) {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         let usingCloud = useCloudAPI
+        let provider = selectedProvider
+        let cloudKey = usingCloud ? Keychain.load(provider: provider) : nil
+        guard !usingCloud || cloudKey?.isEmpty == false else { return }
         guard !trimmed.isEmpty, !isStreaming, usingCloud || serverStatus == .running else { return }
 
         let chatID: UUID
@@ -250,10 +256,8 @@ final class ChatStore: ObservableObject {
         chats[idx].messages.append(assistant)
         isStreaming = true
 
-        let provider = selectedProvider
-        let cloudKey = usingCloud ? Keychain.load(provider: provider) : nil
-
         streamTask = Task { [weak self] in
+            guard let self else { return }
             do {
                 if let cloudKey {
                     switch provider {
@@ -263,8 +267,8 @@ final class ChatStore: ObservableObject {
                             messages: history,
                             systemPrompt: systemPrompt
                         ) { token in
-                            Task { @MainActor [weak self] in
-                                self?.appendToken(token, chatID: chatID, messageID: assistantID)
+                            Task { @MainActor [self] in
+                                self.appendToken(token, chatID: chatID, messageID: assistantID)
                             }
                         }
                     case .openai:
@@ -273,8 +277,8 @@ final class ChatStore: ObservableObject {
                             messages: history,
                             systemPrompt: systemPrompt
                         ) { token in
-                            Task { @MainActor [weak self] in
-                                self?.appendToken(token, chatID: chatID, messageID: assistantID)
+                            Task { @MainActor [self] in
+                                self.appendToken(token, chatID: chatID, messageID: assistantID)
                             }
                         }
                     }
@@ -284,8 +288,8 @@ final class ChatStore: ObservableObject {
                         messages: history,
                         systemPrompt: systemPrompt
                     ) { token in
-                        Task { @MainActor [weak self] in
-                            self?.appendToken(token, chatID: chatID, messageID: assistantID)
+                        Task { @MainActor [self] in
+                            self.appendToken(token, chatID: chatID, messageID: assistantID)
                         }
                     }
                 }

@@ -8,17 +8,24 @@ enum Keychain {
         "com.hikari.ibrain.api-key.\(provider.rawValue)"
     }
 
-    static func save(_ value: String, provider: CloudProvider) {
+    @discardableResult
+    static func save(_ value: String, provider: CloudProvider) -> Bool {
         let data = Data(value.utf8)
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service(for: provider),
         ]
-        SecItemDelete(query as CFDictionary)
-        guard !value.isEmpty else { return }
+        if value.isEmpty {
+            let status = SecItemDelete(query as CFDictionary)
+            return status == errSecSuccess || status == errSecItemNotFound
+        }
+        let updateStatus = SecItemUpdate(query as CFDictionary,
+                                         [kSecValueData as String: data] as CFDictionary)
+        if updateStatus == errSecSuccess { return true }
+        guard updateStatus == errSecItemNotFound else { return false }
         var attributes = query
         attributes[kSecValueData as String] = data
-        SecItemAdd(attributes as CFDictionary, nil)
+        return SecItemAdd(attributes as CFDictionary, nil) == errSecSuccess
     }
 
     static func load(provider: CloudProvider) -> String? {
@@ -34,11 +41,4 @@ enum Keychain {
         return String(data: data, encoding: .utf8)
     }
 
-    static func delete(provider: CloudProvider) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service(for: provider),
-        ]
-        SecItemDelete(query as CFDictionary)
-    }
 }

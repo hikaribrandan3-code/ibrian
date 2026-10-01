@@ -1,131 +1,41 @@
-========================================
+iBrain 1.0.1 — macOS 14+ — Apple Silicon build
+
 ENGLISH
-========================================
+Drag iBrain.app to Applications. This build is ad-hoc signed but not
+notarized. If macOS blocks the first open, right-click the app in Finder and
+choose Open, then use the macOS prompt. System Settings > Privacy & Security
+may offer Open Anyway. Review the source at
+https://github.com/hikaribrandan3-code/ibrian before bypassing a warning.
+Do not disable Gatekeeper globally.
 
-iBrain — First-Time Setup
----------------------------
+Local chat needs a separate Ollama installation and model download. iBrain
+will ask before downloading a recommended model. Local prompts stay on this
+Mac, but optional cloud mode sends prompts and chat history to the selected
+provider and may incur charges. API keys are saved in macOS Keychain; chat
+history is local JSON and is not encrypted.
 
-iBrain doesn't have a paid Apple Developer certificate yet, so the first
-time you open it, macOS will likely refuse with a message like:
-
-    "iBrain.app is damaged and can't be opened. You should move it to
-    the Trash."
-
-This is NOT damage — it's macOS being cautious about an app that isn't from
-a registered Apple developer. iBrain is 100% safe; it runs entirely on
-your Mac via Ollama and never sends your conversations anywhere, unless
-you explicitly opt in to your own Anthropic or OpenAI API key.
-
-You only need to do this once, right after installing:
-
-OPTION A — no Terminal required
-  1. In Finder, go to Applications.
-  2. Right-click (or Control-click) on iBrain, then choose "Open" from
-     the menu (do NOT just double-click).
-  3. A dialog will appear — click "Open" (or "Open Anyway").
-  4. If it still won't open, go to System Settings > Privacy & Security,
-     scroll down, and click "Open Anyway" next to the iBrain message.
-
-OPTION B — one Terminal command
-  1. Open Terminal (Applications > Utilities > Terminal).
-  2. Paste this exact line and press Return:
-
-     xattr -cr /Applications/iBrain.app
-
-  3. Open iBrain normally from Applications.
-
-After either option, iBrain will open normally every time from then on.
-
-Need help? hikaribrandan3@gmail.com
-
-
-========================================
 ESPAÑOL
-========================================
+Arrastrá iBrain.app a Aplicaciones. Esta versión tiene una firma ad-hoc y
+no está notarizada. Si macOS bloquea el primer inicio, hacé clic derecho
+sobre la app en Finder, elegí Abrir y seguí el aviso de macOS. También puede
+aparecer Abrir de todos modos en Ajustes del Sistema > Privacidad y Seguridad.
+Revisá el código en https://github.com/hikaribrandan3-code/ibrian antes de
+omitir una advertencia. No desactives Gatekeeper para todo el sistema.
 
-iBrain — Configuración inicial
---------------------------------
+El chat local requiere instalar Ollama y descargar un modelo por separado;
+iBrain te pedirá permiso antes de descargar el recomendado. El modo nube
+opcional envía mensajes e historial al proveedor elegido y puede tener costo.
+Las claves se guardan en Keychain; el historial es JSON local sin cifrar.
 
-iBrain todavía no tiene un certificado de desarrollador de Apple pago, así
-que la primera vez que lo abras, macOS probablemente lo rechace con un
-mensaje como:
-
-    "iBrain.app está dañado y no se puede abrir. Debes moverlo a la
-    papelera."
-
-Esto NO significa que esté dañado — es macOS siendo cauteloso con una app
-que no viene de un desarrollador registrado de Apple. iBrain es 100%
-seguro; funciona completamente en tu Mac a través de Ollama y nunca envía
-tus conversaciones a ningún lado, a menos que decidas usar tu propia clave
-de API de Anthropic u OpenAI.
-
-Solo necesitás hacer esto una vez, justo después de instalarlo:
-
-OPCIÓN A — sin Terminal
-  1. En Finder, andá a Aplicaciones.
-  2. Hacé clic derecho (o Control-clic) sobre iBrain y elegí "Abrir" en
-     el menú (NO hagas doble clic directamente).
-  3. Va a aparecer un cuadro de diálogo — hacé clic en "Abrir" (o "Abrir
-     de todos modos").
-  4. Si todavía no abre, andá a Configuración del Sistema > Privacidad y
-     Seguridad, desplazate hacia abajo y hacé clic en "Abrir de todos
-     modos" junto al mensaje de iBrain.
-
-OPCIÓN B — un comando de Terminal
-  1. Abrí Terminal (Aplicaciones > Utilidades > Terminal).
-  2. Pegá esta línea exacta y presioná Enter:
-
-     xattr -cr /Applications/iBrain.app
-
-  3. Abrí iBrain normalmente desde Aplicaciones.
-
-Después de cualquiera de las dos opciones, iBrain se abrirá normalmente
-de ahí en adelante.
-
-¿Necesitás ayuda? hikaribrandan3@gmail.com
-
-
-========================================
 PORTUGUÊS
-========================================
+Arraste iBrain.app para Aplicativos. Esta versão tem assinatura ad-hoc e não
+é notarizada. Se o macOS bloquear a primeira abertura, clique com o botão
+direito no app no Finder, escolha Abrir e siga o aviso. Ajustes do Sistema >
+Privacidade e Segurança também pode mostrar Abrir Mesmo Assim. Analise o
+código em https://github.com/hikaribrandan3-code/ibrian antes de ignorar um
+aviso. Não desative o Gatekeeper globalmente.
 
-iBrain — Configuração inicial
---------------------------------
-
-O iBrain ainda não tem um certificado de desenvolvedor Apple pago, então
-na primeira vez que você abrir, o macOS provavelmente vai recusar com uma
-mensagem parecida com:
-
-    "iBrain.app está danificado e não pode ser aberto. Você deve movê-lo
-    para o Lixo."
-
-Isso NÃO significa dano — é o macOS sendo cauteloso com um app que não vem
-de um desenvolvedor Apple registrado. O iBrain é 100% seguro; ele roda
-inteiramente no seu Mac via Ollama e nunca envia suas conversas para lugar
-nenhum, a menos que você opte por usar sua própria chave de API da
-Anthropic ou OpenAI.
-
-Você só precisa fazer isso uma vez, logo após instalar:
-
-OPÇÃO A — sem precisar do Terminal
-  1. No Finder, vá em Aplicativos.
-  2. Clique com o botão direito (ou Control-clique) em iBrain e escolha
-     "Abrir" no menu (NÃO dê duplo clique diretamente).
-  3. Vai aparecer uma caixa de diálogo — clique em "Abrir" (ou "Abrir
-     Mesmo Assim").
-  4. Se ainda não abrir, vá em Ajustes do Sistema > Privacidade e
-     Segurança, role para baixo e clique em "Abrir Mesmo Assim" ao lado
-     da mensagem do iBrain.
-
-OPÇÃO B — um comando no Terminal
-  1. Abra o Terminal (Aplicativos > Utilitários > Terminal).
-  2. Cole esta linha exata e aperte Enter:
-
-     xattr -cr /Applications/iBrain.app
-
-  3. Abra o iBrain normalmente pelos Aplicativos.
-
-Depois de qualquer uma das opções, o iBrain vai abrir normalmente a partir
-daí.
-
-Precisa de ajuda? hikaribrandan3@gmail.com
+O chat local requer instalar Ollama e baixar um modelo separadamente; iBrain
+pedirá antes de baixar o recomendado. O modo de nuvem opcional envia mensagens
+e histórico ao provedor escolhido e pode gerar cobrança. As chaves ficam no
+Keychain; o histórico é JSON local sem criptografia.

@@ -68,7 +68,7 @@ struct OpenAIClient {
         request.timeoutInterval = 8
         guard let (_, response) = try? await URLSession.shared.data(for: request),
               let http = response as? HTTPURLResponse else { return false }
-        return http.statusCode != 401
+        return http.statusCode == 200
     }
 
     enum OpenAIError: Error {

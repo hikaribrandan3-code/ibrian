@@ -1,5 +1,5 @@
 // swift-tools-version: 6.1
-// iBrain — free, private, 100% local AI chat for the iSuite bundle.
+// iBrain — local Ollama chat with optional cloud providers for iSuite.
 import PackageDescription
 
 let package = Package(

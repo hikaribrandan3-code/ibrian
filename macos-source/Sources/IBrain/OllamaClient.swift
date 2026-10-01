@@ -157,18 +157,4 @@ struct OllamaClient {
             .contains { FileManager.default.isExecutableFile(atPath: $0) }
     }
 
-    @discardableResult
-    static func downloadModel(_ modelName: String) async -> Bool {
-        guard binaryInstalled else { return false }
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-        process.arguments = ["ollama", "pull", modelName]
-        do {
-            try process.run()
-            process.waitUntilExit()
-            return process.terminationStatus == 0
-        } catch {
-            return false
-        }
-    }
 }

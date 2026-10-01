@@ -66,7 +66,8 @@ struct AnthropicClient {
         }
     }
 
-    // Lightweight validation — a 401 means the key is bad, anything else we treat as reachable.
+    // A successful request is the only positive validation; an error, rate
+    // limit, or billing restriction must not be shown as "Working".
     static func validateKey(_ apiKey: String) async -> Bool {
         var request = URLRequest(url: baseURL)
         request.httpMethod = "POST"
@@ -81,7 +82,7 @@ struct AnthropicClient {
         ])
         guard let (_, response) = try? await URLSession.shared.data(for: request),
               let http = response as? HTTPURLResponse else { return false }
-        return http.statusCode != 401
+        return http.statusCode == 200
     }
 
     enum AnthropicError: Error {

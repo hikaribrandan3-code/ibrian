@@ -1,4 +1,4 @@
-// iBrain — free, private AI chat that runs 100% on your Mac via Ollama.
+// iBrain — local Ollama chat by default, with optional cloud API mode.
 // Regular windowed app (Dock icon, Applications/Spotlight visible) with a
 // small menu bar quick-open extra, matching the rest of the iSuite apps.
 import AppKit
@@ -69,6 +69,7 @@ struct MainView: View {
     @ObservedObject var store: ChatStore
     @AppStorage(Prefs.language) private var languageRaw = "en"
     @AppStorage(OnboardingPrefs.hasSeenOnboarding) private var hasSeenOnboarding = false
+    @AppStorage(Prefs.useCloudAPI) private var cloudModeEnabled = false
 
     private var language: Language {
         Language(rawValue: languageRaw) ?? .en
@@ -80,7 +81,9 @@ struct MainView: View {
                 SidebarView(store: store, language: language)
                     .frame(minWidth: 220, idealWidth: 240, maxWidth: 320)
                 Group {
-                    if store.useCloudAPI || (store.serverStatus == .running && !store.models.isEmpty) {
+                    if cloudModeEnabled && !store.hasCloudKey {
+                        CloudKeyRequiredView(language: language)
+                    } else if store.useCloudAPI || (store.serverStatus == .running && !store.models.isEmpty) {
                         ChatView(store: store, language: language)
                     } else if store.serverStatus == .checking && store.models.isEmpty {
                         VStack {
@@ -102,5 +105,25 @@ struct MainView: View {
             }
             .frame(minWidth: 760, minHeight: 520)
         }
+    }
+}
+
+private struct CloudKeyRequiredView: View {
+    let language: Language
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "key.fill")
+                .font(.system(size: 32))
+                .foregroundStyle(.secondary)
+            Text(Strings.get("cloud.missing.title", lang: language))
+                .font(.headline)
+            Text(Strings.get("cloud.missing.body", lang: language))
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 360)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

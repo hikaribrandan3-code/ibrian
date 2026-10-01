@@ -33,6 +33,8 @@ struct SettingsView: View {
     @AppStorage(Prefs.cloudProvider) private var cloudProviderRaw = CloudProvider.anthropic.rawValue
     @AppStorage(Prefs.appearance) private var appearanceRaw = Appearance.system.rawValue
     @State private var apiKeyInput = ""
+    @State private var savedKey = ""
+    @State private var keySaveFailed = false
     @State private var validating = false
 
     private var cloudProvider: CloudProvider {
@@ -47,8 +49,13 @@ struct SettingsView: View {
         Language(rawValue: languageRaw) ?? .en
     }
 
+    private var keyDirty: Bool {
+        apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines) != savedKey
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 8) {
                 sectionLabel(Strings.get("settings.general", lang: language))
 
@@ -159,6 +166,7 @@ struct SettingsView: View {
                             .font(.system(size: 13))
                     }
                 }
+                .onChange(of: useCloudAPI) { _, _ in store.cloudSettingsDidChange() }
 
                 if useCloudAPI {
                     Picker("", selection: $cloudProviderRaw) {
@@ -169,8 +177,11 @@ struct SettingsView: View {
                     .labelsHidden()
                     .pickerStyle(.segmented)
                     .onChange(of: cloudProviderRaw) { _, _ in
-                        apiKeyInput = Keychain.load(provider: cloudProvider) ?? ""
+                        savedKey = Keychain.load(provider: cloudProvider) ?? ""
+                        apiKeyInput = savedKey
+                        keySaveFailed = false
                         store.cloudKeyValid = nil
+                        store.cloudSettingsDidChange()
                     }
 
                     SecureField(
@@ -179,9 +190,29 @@ struct SettingsView: View {
                     )
                     .textFieldStyle(.roundedBorder)
                     .font(.system(size: 12, design: .monospaced))
-                    .onChange(of: apiKeyInput) { _, newValue in
-                        Keychain.save(newValue.trimmingCharacters(in: .whitespacesAndNewlines), provider: cloudProvider)
+                    .onChange(of: apiKeyInput) { _, _ in
                         store.cloudKeyValid = nil
+                        keySaveFailed = false
+                    }
+
+                    HStack(spacing: 8) {
+                        Button(Strings.get("settings.cloud.save", lang: language)) {
+                            let candidate = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
+                            if Keychain.save(candidate, provider: cloudProvider) {
+                                savedKey = candidate
+                                keySaveFailed = false
+                                store.cloudKeyValid = nil
+                                store.cloudSettingsDidChange()
+                            } else {
+                                keySaveFailed = true
+                            }
+                        }
+                        .disabled(!keyDirty)
+                        if keySaveFailed {
+                            Text(Strings.get("settings.cloud.saveFailed", lang: language))
+                                .font(.system(size: 11))
+                                .foregroundStyle(.red)
+                        }
                     }
 
                     HStack(spacing: 6) {
@@ -199,7 +230,7 @@ struct SettingsView: View {
                                     .font(.system(size: 12))
                             }
                         }
-                        .disabled(apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || validating)
+                        .disabled(savedKey.isEmpty || keyDirty || validating)
 
                         if let valid = store.cloudKeyValid {
                             HStack(spacing: 4) {
@@ -255,6 +286,7 @@ struct SettingsView: View {
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity)
+            }
         }
         .toggleStyle(.switch)
         .controlSize(.small)
@@ -262,7 +294,8 @@ struct SettingsView: View {
         .frame(width: 380, height: 560, alignment: .topLeading)
         .onAppear {
             if defaultModel.isEmpty { defaultModel = store.defaultModel }
-            apiKeyInput = Keychain.load(provider: cloudProvider) ?? ""
+            savedKey = Keychain.load(provider: cloudProvider) ?? ""
+            apiKeyInput = savedKey
         }
     }
 
