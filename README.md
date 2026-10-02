@@ -19,3 +19,7 @@ The Anthropic implementation currently uses `claude-sonnet-5`; OpenAI uses `gpt-
 Requires macOS 14 or later and Xcode 16 with a Swift 6.1 compatible toolchain. Run `make app` or `make dmg` from `macos-source/`. The app is ad-hoc signed and not notarized. A 1.0.1 Apple Silicon build is staged for the creator's smoke test before public release. Intel compatibility is unverified. See [development notes](DEVELOPMENT_NOTES.md).
 
 AI coding tools assisted the original app and this cleanup. I chose its scope, tested it on my Mac, reviewed the source, and recorded the changes and limits here. Licensed under MIT.
+
+## Portfolio evidence
+
+[Mac app suite case study](https://hikari-brandan.vercel.app/projects/macos-app-suite) documents the product story and current limits.
